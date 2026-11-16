@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">图标隐藏</string>
+    <string name="search_hint">搜索应用名称</string>
+    <string name="status_format">共 %1$d 个应用，已隐藏 %2$d 个。关闭开关即隐藏图标，打开即恢复显示。</string>
+    <string name="toast_hidden">已隐藏「%1$s」，桌面图标已消失</string>
+    <string name="toast_shown">已显示「%1$s」，桌面图标已恢复</string>
+    <string name="loading">正在加载应用列表…</string>
+</resources>
