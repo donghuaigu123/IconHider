@@ -39,5 +39,5 @@ $BT/apksigner sign --ks keystore.jks --ks-key-alias iconhider \
   --ks-pass pass:iconhider2026 --out build/IconHider-signed.apk build/aligned.apk
 
 $BT/apksigner verify build/IconHider-signed.apk && echo "== 验签通过 =="
-cp build/IconHider-signed.apk /workspace/IconHider/apk/图标隐藏-v1.0.apk
-echo "== 完成: /workspace/IconHider/apk/图标隐藏-v1.0.apk =="
+cp build/IconHider-signed.apk /workspace/IconHider/apk/图标隐藏-v2.0.apk
+echo "== 完成: /workspace/IconHider/apk/图标隐藏-v2.0.apk =="

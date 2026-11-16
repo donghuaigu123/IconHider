@@ -1,45 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="#F5F6FA">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:paddingTop="20dp"
-        android:text="@string/app_name"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:textColor="#1B1D29" />
-
-    <EditText
-        android:id="@+id/search"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
-        android:padding="12dp"
-        android:hint="@string/search_hint"
-        android:inputType="text"
-        android:background="#FFFFFF"
-        android:elevation="2dp" />
-
-    <TextView
-        android:id="@+id/status"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="12dp"
-        android:textSize="12sp"
-        android:textColor="#666B7A" />
-
-    <ListView
-        android:id="@+id/list"
+    <!-- 桌面视图 -->
+    <LinearLayout
+        android:id="@+id/desktop_panel"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="@null"
-        android:dividerHeight="0dp"
-        android:cacheColorHint="#00000000" />
-</LinearLayout>
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/home_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textSize="12sp"
+            android:textColor="#B23A2B"
+            android:background="#FFFFFF"
+            android:clickable="true" />
+
+        <GridView
+            android:id="@+id/app_grid"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:numColumns="4"
+            android:horizontalSpacing="4dp"
+            android:verticalSpacing="10dp"
+            android:paddingTop="12dp"
+            android:paddingLeft="6dp"
+            android:paddingRight="6dp"
+            android:gravity="center"
+            android:stretchMode="columnWidth"
+            android:scrollbars="none" />
+
+        <TextView
+            android:id="@+id/btn_manage"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:gravity="center"
+            android:text="@string/mode_manage"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:background="#4F6EF4"
+            android:clickable="true" />
+    </LinearLayout>
+
+    <!-- 管理模式：所有应用的显示/隐藏开关 -->
+    <LinearLayout
+        android:id="@+id/manage_panel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#F5F6FA"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/btn_back"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="16dp"
+            android:text="@string/mode_back"
+            android:textSize="16sp"
+            android:textColor="#4F6EF4"
+            android:background="#FFFFFF"
+            android:clickable="true" />
+
+        <EditText
+            android:id="@+id/search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginTop="8dp"
+            android:padding="12dp"
+            android:hint="@string/search_hint"
+            android:inputType="text"
+            android:background="#FFFFFF"
+            android:singleLine="true" />
+
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:textSize="12sp"
+            android:textColor="#666B7A" />
+
+        <ListView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@null"
+            android:dividerHeight="0dp"
+            android:cacheColorHint="#00000000" />
+    </LinearLayout>
+</FrameLayout>

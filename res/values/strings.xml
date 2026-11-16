@@ -2,8 +2,23 @@
 <resources>
     <string name="app_name">图标隐藏</string>
     <string name="search_hint">搜索应用名称</string>
-    <string name="status_format">共 %1$d 个应用，已隐藏 %2$d 个。关闭开关即隐藏图标，打开即恢复显示。</string>
-    <string name="toast_hidden">已隐藏「%1$s」，桌面图标已消失</string>
-    <string name="toast_shown">已显示「%1$s」，桌面图标已恢复</string>
-    <string name="loading">正在加载应用列表…</string>
+    <string name="status_format">共 %1$d 个应用，已隐藏 %2$d 个</string>
+    <string name="hidden">已隐藏</string>
+    <string name="visible">显示中</string>
+    <string name="mode_manage">管理图标</string>
+    <string name="mode_back">← 返回桌面</string>
+    <string name="toast_hidden">已隐藏「%1$s」的图标</string>
+    <string name="toast_shown">已显示「%1$s」的图标</string>
+    <string name="toast_longpress">长按图标可快速隐藏</string>
+    <string name="home_hint">当前未设为默认桌面，图标隐藏仅在默认桌面下生效。点此设置 →</string>
+    <string name="home_ok">✓ 已是默认桌面，可以开始管理图标了</string>
+    <string name="guide_title">欢迎使用图标隐藏</string>
+    <string name="guide_message">由于 Android 系统安全限制，普通应用无法直接隐藏其他应用在系统桌面上的图标。\n\n本应用采用「自带桌面」方案：设为默认桌面后，你可以自由决定哪些应用的图标显示、哪些隐藏，一次设置永久生效，无需 Root、无需特殊权限。\n\n现在点击"设为默认桌面"，在系统弹窗中选择"始终"即可。</string>
+    <string name="guide_ok">设为默认桌面</string>
+    <string name="guide_later">稍后设置</string>
+    <string name="set_home_fail">无法直接打开设置，请在系统设置 → 应用 → 默认应用中将本应用设为桌面</string>
+    <string name="action_hide">隐藏此图标</string>
+    <string name="action_show">显示此图标</string>
+    <string name="action_app_info">应用信息</string>
+    <string name="empty_search">没有找到匹配的应用</string>
 </resources>

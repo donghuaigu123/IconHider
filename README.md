@@ -1,70 +1,49 @@
-# 图标隐藏 (IconHider)
+# 图标隐藏 (IconHider) v2.0
 
-一个真正傻瓜式的 Android 应用图标隐藏工具：打开 App，看到所有已安装应用列表，**关掉开关 = 桌面图标隐藏，打开开关 = 图标恢复显示**，一键完成，无需 Root、无需任何复杂设置。
+真正能用的傻瓜式图标隐藏工具：**把本应用设为默认桌面**，之后就能自由决定任意 APP 的图标「显示」还是「隐藏」，一键勾选，立即生效。**无需 Root、无需特殊权限**。
+
+## ⚠️ 为什么 v1.0 不能用？（v2.0 方案说明）
+
+v1.0 尝试调用 `setComponentEnabledSetting()` 去禁用其他应用的桌面图标组件。但在 Android 中，修改其他应用的组件状态需要系统签名级权限 `CHANGE_COMPONENT_ENABLED_STATE`，普通第三方 App 调用必然抛 `SecurityException` —— 这是系统设计，不是小 bug。
+
+v2.0 采用**自带桌面（Launcher）方案**：本应用本身就是一个桌面，桌面上的图标完全由你控制。这是普通手机上唯一无需 Root 就能真正自由隐藏任意应用图标的方式。Google Play 上绝大多数「隐藏应用」工具也是这个原理。
+
+## 使用方法（一次设置，永久生效）
+
+1. 安装 APK，打开「图标隐藏」
+2. 首次打开会弹出引导，点击 **「设为默认桌面」**，在系统弹窗中选择 **「始终」**
+   - 若跳转失败：系统设置 → 应用 → 默认应用 → 桌面应用 → 选「图标隐藏」
+3. 此后按 HOME 键进入本桌面，可以看到手机上所有应用的图标
+4. **隐藏图标**：点底部「管理图标」→ 关闭对应应用右侧的开关 → 该图标立刻从桌面消失
+5. **恢复显示**：在管理列表中找到该应用（隐藏的应用排在最前面，红色文字标注）→ 打开开关
+6. **快捷操作**：在桌面上**长按**任意图标，可直接隐藏/显示，或跳转到应用信息
+7. 点击图标正常启动应用；顶栏会提示当前是否已设为默认桌面，未设置时可直接点击跳转设置
 
 ## 功能特点
 
-- 📱 列出设备上全部已安装应用（含图标、名称、包名）
-- 🙈 每个应用一枚开关：关闭即隐藏桌面图标，打开即恢复
-- 🔍 顶部搜索框快速定位应用
-- 🧠 无需 Root：基于 Android 系统 `PackageManager.setComponentEnabledSetting` 机制实现
-- 📊 顶部实时统计「共 N 个应用，已隐藏 M 个」
-- ✅ 自身应用不出现在列表中，避免误把自己藏起来找不到
+- 🏠 完整桌面：网格展示所有应用图标，点击启动、长按快捷管理
+- 🙈 显示/隐藏开关：管理列表中每个应用一枚开关，**整行点击**即可切换，绝不失灵
+- 🔍 搜索框：快速定位应用
+- 💾 隐藏状态持久化：重启手机后依然生效
+- 🔄 自动感知新安装/卸载的应用，列表实时刷新
+- 🚫 自身不出现在管理列表，不会误隐藏导致找不到应用
+- ✅ 无任何特殊权限要求（仅 `QUERY_ALL_PACKAGES` 用于枚举应用，Android 11+ 可见性要求）
 
-## 使用方法
+## 常见问题
 
-1. 下载 `apk/图标隐藏-v1.0.apk`（或 GitHub Release 中的附件）安装到手机
-2. 安装时如提示「未知来源」，允许即可
-3. 打开「图标隐藏」，在列表中找到想隐藏的应用
-4. 关闭该应用右侧的开关 → 桌面图标立即消失；想恢复时打开开关即可
+- **隐藏后应用还在吗？** 在的。只是桌面上不再显示图标，应用本体完好无损，可在系统设置的应用列表里找到，也可随时在本应用开关恢复。
+- **不想用了怎么办？** 系统设置 → 应用 → 默认应用 → 桌面应用 → 换回原桌面即可；隐藏记录仍保留，下次设回来还是同样的桌面。
+- **为什么必须设为默认桌面？** 如上所述，Android 不允许普通 App 隐藏系统桌面上的其他应用图标，只有自己做桌面才能完全掌控图标显示。
+- **部分机型跳转"设为默认桌面"失败？** 请手动到 系统设置 → 应用 → 默认应用 → 桌面应用 中选择。
 
-## 技术原理
+## 技术实现
 
-应用在桌面显示图标，本质上是清单里声明的 launcher 入口组件（Activity 或 activity-alias）处于启用状态。本应用调用系统的：
-
-```java
-pm.setComponentEnabledSetting(componentName,
-        COMPONENT_ENABLED_STATE_DISABLED,   // 隐藏
-        DONT_KILL_APP);
-```
-
-即可禁用目标应用的桌面入口组件，桌面（Launcher）便不再展示其图标；恢复时切换为 `COMPONENT_ENABLED_STATE_ENABLED`。该机制为 Android 公开 API，无需 Root。应用声明了 `QUERY_ALL_PACKAGES` 权限以枚举全部应用（Android 11+ 可见性要求）。
-
-## 构建方式
-
-项目为**零依赖纯构建**（无 Gradle/AGP），仅需 Android build-tools 与 platform android.jar：
-
-```bash
-./build.sh
-```
-
-脚本流程：`aapt2 compile/link` → `javac` → `d8` → `zip` 打包 → `zipalign` → `apksigner` 签名。
-
-- `minSdk 21`（Android 5.0+）
-- `targetSdk 34`
-- 签名密钥 `keystore.jks` 仅用于演示，正式发布请自行替换
-
-## 项目结构
-
-```
-IconHider/
-├── AndroidManifest.xml          # 清单：QUERY_ALL_PACKAGES、入口 Activity
-├── build.sh                     # 一键构建脚本
-├── src/com/workbuddy/iconhider/
-│   └── MainActivity.java        # 全部业务逻辑（列表 / 开关 / 搜索）
-├── res/
-│   ├── layout/main.xml          # 主界面：搜索框 + 状态栏 + 列表
-│   ├── layout/item.xml          # 列表项：图标 + 名称 + 开关
-│   ├── values/strings.xml       # 字符串资源
-│   └── mipmap/ic_launcher.png   # 应用图标
-└── apk/图标隐藏-v1.0.apk        # 已签名成品
-```
-
-## 注意事项
-
-- 部分厂商系统（如 MIUI 等）对「应用双开」「系统预装应用」的组件禁用可能做了限制，此类应用开关可能不生效或被系统自动恢复
-- 隐藏的只是桌面图标，应用本体仍可通过系统设置中的应用列表或其他入口打开
-- 若本应用被系统清理，已隐藏的图标不会自动恢复，重新打开本应用把开关打开即可
+- `MainActivity`：既是 Launcher 桌面，也是管理界面（`HOME` + `LAUNCHER` 双 intent-filter）
+- 隐藏状态：`SharedPreferences` 的 `StringSet` 持久化
+- 应用列表：`PackageManager.queryIntentActivities()` + `QUERY_ALL_PACKAGES`
+- 动态刷新：注册 `ACTION_PACKAGE_ADDED/REMOVED/CHANGED` 广播
+- 零依赖纯构建：`aapt2 → javac → d8 → zipalign → apksigner`，`./build.sh` 一键完成
+- minSdk 21 / targetSdk 34
 
 ## 开源许可
 
